@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiesing Labs — Intelligent Systems from Mobile to Wearable</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Literata:opsz,wght@7..72,300;7..72,400;7..72,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #0a0e12;
+            --secondary-bg: #111620;
+            --tertiary-bg: #1a2332;
+            --accent: #4a9eff;
+            --accent-dim: #2d6ba8;
+            --text-primary: #e8eef5;
+            --text-secondary: #8b9db5;
+            --text-tertiary: #5a6b7f;
+            --border: #1e2938;
+            --glow: rgba(74, 158, 255, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Literata', Georgia, serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+
+        /* Animated grid background */
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.03;
+            background-image: 
+                linear-gradient(var(--accent) 1px, transparent 1px),
+                linear-gradient(90deg, var(--accent) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            padding: 80px 0 120px;
+            position: relative;
+        }
+
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--accent);
+            letter-spacing: 0.5px;
+            margin-bottom: 60px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        h1 {
+            font-family: 'Literata', Georgia, serif;
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            font-weight: 300;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.4s forwards;
+        }
+
+        /* Section styling */
+        section {
+            margin-bottom: 120px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        section:nth-child(2) { animation-delay: 0.5s; }
+        section:nth-child(3) { animation-delay: 0.6s; }
+        section:nth-child(4) { animation-delay: 0.7s; }
+        section:nth-child(5) { animation-delay: 0.8s; }
+        section:nth-child(6) { animation-delay: 0.9s; }
+        section:nth-child(7) { animation-delay: 1s; }
+
+        h2 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+            margin-bottom: 32px;
+            position: relative;
+            padding-left: 24px;
+        }
+
+        h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        h3 {
+            font-family: 'Literata', Georgia, serif;
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            margin-top: 48px;
+        }
+
+        h3:first-of-type {
+            margin-top: 0;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        /* Product card */
+        .product-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border);
+            padding: 32px;
+            margin: 24px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--accent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-card:hover {
+            border-color: var(--accent-dim);
+            box-shadow: 0 0 40px var(--glow);
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+        }
+
+        .product-card h3 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        /* List styling */
+        ul {
+            list-style: none;
+            margin: 24px 0;
+        }
+
+        ul li {
+            color: var(--text-secondary);
+            padding-left: 24px;
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        ul li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Status badge */
+        .status-badge {
+            display: inline-block;
+            background: var(--tertiary-bg);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-top: 16px;
+        }
+
+        /* Technical foundation section */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .tech-item {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border);
+            padding: 24px;
+        }
+
+        .tech-item h4 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--accent);
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .tech-item p {
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 60px 0;
+            margin-top: 120px;
+            text-align: center;
+        }
+
+        footer p {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin: 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 60px 0 80px;
+            }
+
+            section {
+                margin-bottom: 80px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+            }
+
+            .product-card {
+                padding: 24px;
+            }
+
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Subtle accent glow on hover for interactive elements */
+        .product-card, .tech-item {
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            border-color: var(--accent-dim);
+            box-shadow: 0 0 30px var(--glow);
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-background"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">THIESING LABS</div>
+            <h1>Building intelligent systems that extend from mobile to wearable surfaces</h1>
+            <p class="hero-subtitle">We develop mobile-first applications powered by AI, designed to naturally expand into voice, wearables, and emerging interaction models. Our products share common infrastructure and adapt to how people actually work.</p>
+        </header>
+
+        <section>
+            <h2>Company Overview</h2>
+            <p>Thiesing Labs is an independent software studio and parent company for a portfolio of productivity and intelligence tools. We build modular systems that begin on mobile devices and extend into new interfaces as they emerge.</p>
+            <p>Our approach prioritizes mobile as the core platform—where processing, storage, and intelligence live—while treating wearables and voice interfaces as lightweight interaction layers. This architecture allows us to build once and extend thoughtfully, rather than fragmenting development across disconnected platforms.</p>
+            <p>We focus on long-term system design over rapid feature deployment. Each product is built to integrate with others over time, creating a cohesive ecosystem rather than isolated tools.</p>
+        </section>
+
+        <section>
+            <h2>What We Build</h2>
+            
+            <h3>Productivity and Planning Intelligence</h3>
+            <p>Applications that understand context, adapt to user patterns, and surface the right information at the right time. Our systems connect calendar data, task management, and real-world scheduling constraints into unified planning tools.</p>
+
+            <h3>Capture Systems</h3>
+            <p>Tools that transform voice notes, camera input, and environmental context into structured, actionable data. We focus on reducing friction between thought and documentation.</p>
+
+            <h3>Context-Aware Interfaces</h3>
+            <p>Software that adapts its presentation and interaction model based on the device, environment, and user activity. Mobile remains the anchor, but interactions can happen hands-free through voice or glanceable displays when appropriate.</p>
+        </section>
+
+        <section>
+            <h2>Products & Projects</h2>
+            
+            <div class="product-card">
+                <h3>TimeFlow</h3>
+                <p>A mobile scheduling and planning application that integrates calendar systems, task management, and intelligent time blocking. TimeFlow serves as our flagship product and foundation for exploring context-aware productivity tools.</p>
+                <span class="status-badge">In Development</span>
+            </div>
+
+            <p style="margin-top: 32px;">Additional projects are currently in development and prototyping.</p>
+        </section>
+
+        <section>
+            <h2>AI Glasses & Wearables Vision</h2>
+            <p>AI glasses represent an interaction and capture layer, not a standalone platform. We view wearable devices as extensions of mobile applications—providing hands-free input, quick capture, and contextual feedback while the core intelligence remains in the mobile app and cloud services.</p>
+            
+            <p style="margin-top: 32px; color: var(--text-primary); font-weight: 400;">Our approach:</p>
+            <ul>
+                <li>Mobile applications handle processing, storage, and complex logic</li>
+                <li>Wearables provide voice input, camera capture, and lightweight notifications</li>
+                <li>Data flows bidirectionally: devices capture input, mobile processes and responds</li>
+                <li>User experience adapts based on which surface is active</li>
+            </ul>
+
+            <p style="margin-top: 32px;">This architecture allows us to build for emerging hardware without being dependent on any single device ecosystem. As wearable capabilities evolve, our systems can adopt new features through updates to the mobile layer.</p>
+            
+            <p>We do not build native applications that run independently on wearable devices. Instead, we design mobile applications that intelligently leverage wearable inputs and outputs when available.</p>
+        </section>
+
+        <section>
+            <h2>Current Status</h2>
+            <p>Products are in active development and prototyping. TimeFlow is currently being built as a React Native application with planned integration for wearable capture and voice interaction.</p>
+            <p>We are focused on establishing core functionality and system architecture before expanding to additional surfaces and product lines.</p>
+        </section>
+
+        <section>
+            <h2>Technical Foundation</h2>
+            
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <h4>Infrastructure</h4>
+                    <p>Mobile-first architecture (iOS and Android via React Native). Cloud-based intelligence and data processing. Modular service design for cross-product integration. API-driven communication between mobile apps and wearable interfaces.</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Development Philosophy</h4>
+                    <p>Build core logic once, extend to new surfaces incrementally. Prioritize data portability and user control. Design for long-term system coherence over feature velocity.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2024 Thiesing Labs. For partnership, development, or technical inquiries: thiesinglabs@gmail.com</p>
+        </footer>
+    </div>
+</body>
+</html>
