@@ -15,7 +15,6 @@
       --text-primary: #f0f0f0;
       --text-secondary: #888;
       --text-tertiary: #555;
-      --accent: #e8e8e8;
       --tag-bg: #1a1a1a;
     }
 
@@ -30,12 +29,9 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* NAV */
     nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 100;
       display: flex;
       align-items: center;
@@ -81,12 +77,8 @@
       transition: border-color 0.15s, background 0.15s;
     }
 
-    .nav-cta:hover {
-      border-color: #444;
-      background: var(--surface);
-    }
+    .nav-cta:hover { border-color: #444; background: var(--surface); }
 
-    /* MAIN LAYOUT */
     main { padding-top: 60px; }
 
     section {
@@ -95,15 +87,9 @@
       padding: 100px 40px;
     }
 
-    section + section {
-      border-top: 1px solid var(--border);
-    }
+    section + section { border-top: 1px solid var(--border); }
 
-    /* HERO */
-    .hero {
-      padding-top: 140px;
-      padding-bottom: 120px;
-    }
+    .hero { padding-top: 140px; padding-bottom: 120px; }
 
     .hero-eyebrow {
       font-size: 11px;
@@ -114,18 +100,13 @@
     }
 
     .hero h1 {
-      font-size: clamp(36px, 5vw, 54px);
+      font-size: clamp(32px, 5vw, 50px);
       font-weight: 500;
       line-height: 1.15;
       letter-spacing: -0.02em;
       color: var(--text-primary);
       margin-bottom: 28px;
       max-width: 680px;
-    }
-
-    .hero h1 em {
-      font-style: normal;
-      color: var(--text-secondary);
     }
 
     .hero-sub {
@@ -166,7 +147,6 @@
 
     .btn-ghost:hover { color: var(--text-primary); }
 
-    /* SECTION HEADERS */
     .section-label {
       font-size: 11px;
       letter-spacing: 0.14em;
@@ -175,7 +155,6 @@
       margin-bottom: 48px;
     }
 
-    /* VENTURES */
     .ventures-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -189,12 +168,10 @@
     .venture-card {
       background: var(--surface);
       padding: 36px;
-      text-decoration: none;
       display: flex;
       flex-direction: column;
       gap: 12px;
       transition: background 0.15s;
-      cursor: default;
     }
 
     .venture-card:hover { background: #161616; }
@@ -247,22 +224,9 @@
       flex: 1;
     }
 
-    .venture-link {
-      font-size: 12px;
-      color: var(--text-tertiary);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      margin-top: 8px;
-    }
-
-    .venture-link:hover { color: var(--text-primary); }
-
-    /* PRINCIPLES */
     .principles-list {
       display: flex;
       flex-direction: column;
-      gap: 0;
       border: 1px solid var(--border);
       border-radius: 12px;
       overflow: hidden;
@@ -291,7 +255,6 @@
       line-height: 1.65;
     }
 
-    /* ABOUT */
     .about-text {
       font-size: 16px;
       color: var(--text-secondary);
@@ -299,11 +262,8 @@
       max-width: 640px;
     }
 
-    .about-text + .about-text {
-      margin-top: 20px;
-    }
+    .about-text + .about-text { margin-top: 20px; }
 
-    /* FOOTER */
     footer {
       border-top: 1px solid var(--border);
       padding: 48px 40px;
@@ -328,10 +288,7 @@
       text-transform: uppercase;
     }
 
-    .footer-copy {
-      font-size: 12px;
-      color: var(--text-tertiary);
-    }
+    .footer-copy { font-size: 12px; color: var(--text-tertiary); }
 
     .footer-contact {
       font-size: 13px;
@@ -342,9 +299,9 @@
 
     .footer-contact:hover { color: var(--text-primary); }
 
-    /* RESPONSIVE */
     @media (max-width: 640px) {
       nav { padding: 0 20px; }
+      .nav-links { display: none; }
       section { padding: 80px 20px; }
       .ventures-grid { grid-template-columns: 1fr; }
       .principle { grid-template-columns: 1fr; gap: 8px; }
@@ -362,25 +319,23 @@
       <li><a href="#principles">Principles</a></li>
       <li><a href="#about">About</a></li>
     </ul>
-    <a href="mailto:therien@thiesinglabs.com" class="nav-cta">Get in touch</a>
+    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=therien@thiesinglabs.com" target="_blank" rel="noopener" class="nav-cta">Get in touch</a>
   </nav>
 
   <main>
 
-    <!-- HERO -->
     <section class="hero">
       <p class="hero-eyebrow">Thiesing Labs</p>
-      <h1>A Software Development Studio focused on building innovative solutions to real world problems.</h1>
+      <h1>A Software Development Studio building innovative solutions to real world problems.</h1>
       <p class="hero-sub">
         We're an independent venture studio. We design, develop, and launch scalable businesses across industries including healthcare, commerce, and logistics. We combine software engineering, automation, and design thinking to create impactful solutions.
       </p>
       <div class="hero-actions">
         <a href="#ventures" class="btn-primary">See our work</a>
-        <a href="mailto:therien@thiesinglabs.com" class="btn-ghost">Get in touch →</a>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=therien@thiesinglabs.com" target="_blank" rel="noopener" class="btn-ghost">Get in touch &rarr;</a>
       </div>
     </section>
 
-    <!-- VENTURES -->
     <section id="ventures">
       <p class="section-label">Ventures</p>
       <div class="ventures-grid">
@@ -388,7 +343,7 @@
         <div class="venture-card">
           <span class="venture-tag active"><span class="dot"></span>Active</span>
           <div class="venture-name">Compatible AI</div>
-          <div class="venture-insight">"Is your business transacatable through AI?"</div>
+          <div class="venture-insight">"Is your business transactable through AI?"</div>
           <div class="venture-desc">
             The infrastructure layer connecting the physical services economy to the agentic web — so independent businesses are discoverable, evaluable, and bookable inside ChatGPT, Claude, and Google AI Mode. No technical setup required.
           </div>
@@ -399,7 +354,7 @@
           <div class="venture-name">Pose</div>
           <div class="venture-insight">"Music artists get paid when their work is used. Authors should too."</div>
           <div class="venture-desc">
-            Licensing infrastructure for book knowledge in the age of AI. Authors set terms, AI applications pay to access, citation limits are enforced, and creators are compensated — automatically.
+            Licensing infrastructure for book knowledge in the age of AI. Authors set terms, AI applications pay to access, citation limits are enforced, and creators are compensated automatically.
           </div>
         </div>
 
@@ -417,14 +372,13 @@
           <div class="venture-name">Music Flow</div>
           <div class="venture-insight">"The business side of music is where artists lose the most."</div>
           <div class="venture-desc">
-            Tools for independent musicians to manage the operational layer of their career — rights, releases, revenue tracking — without needing a label or a manager.
+            Tools for independent musicians to manage the operational layer of their career, rights, releases, and revenue tracking, without needing a label or a manager.
           </div>
         </div>
 
       </div>
     </section>
 
-    <!-- PRINCIPLES -->
     <section id="principles">
       <p class="section-label">How We Work</p>
       <div class="principles-list">
@@ -446,7 +400,7 @@
         <div class="principle">
           <div class="principle-name">Stay lean on purpose</div>
           <div class="principle-desc">
-            AI infrastructure has changed what a small team can build. We use that advantage deliberately — staying small keeps us fast, close to users, and free from the organizational weight that slows most companies down.
+            AI infrastructure has changed what a small team can build. We use that advantage deliberately. Staying small keeps us fast, close to users, and free from the organizational weight that slows most companies down.
           </div>
         </div>
 
@@ -460,17 +414,16 @@
       </div>
     </section>
 
-    <!-- ABOUT -->
     <section id="about">
       <p class="section-label">About</p>
       <p class="about-text">
-        Thiesing Labs is an independent venture studio founded by Therien Thiesing. We build across technology, systems, and product design — finding problems at inflection points where new infrastructure makes entirely new products possible.
+        Thiesing Labs is an independent venture studio founded by Therien Thiesing. We build across technology, systems, and product design, finding problems at inflection points where new infrastructure makes entirely new products possible.
       </p>
       <p class="about-text">
-        We're currently focused on the agentic commerce layer — the infrastructure that lets AI assistants discover, evaluate, and transact with businesses on behalf of users. Our flagship venture, Compatible AI, is our first product in this space.
+        We're currently focused on the agentic commerce layer, the infrastructure that lets AI assistants discover, evaluate, and transact with businesses on behalf of users. Our flagship venture, Compatible AI, is our first product in this space.
       </p>
       <p class="about-text" style="margin-top: 20px; font-size: 14px; color: var(--text-tertiary);">
-        For partnership, investment, or collaboration inquiries: <a href="mailto:therien@thiesinglabs.com" style="color: var(--text-secondary); text-decoration: none;">therien@thiesinglabs.com</a>
+        For partnership, investment, or collaboration: <a href="https://mail.google.com/mail/?view=cm&fs=1&to=therien@thiesinglabs.com" target="_blank" rel="noopener" style="color: var(--text-secondary); text-decoration: none;">therien@thiesinglabs.com</a>
       </p>
     </section>
 
@@ -479,9 +432,9 @@
   <footer>
     <div class="footer-left">
       <span class="footer-name">Thiesing Labs</span>
-      <span class="footer-copy">© 2026 · Independent Venture Studio</span>
+      <span class="footer-copy">&copy; 2026 &middot; Independent Venture Studio</span>
     </div>
-    <a href="mailto:therien@thiesinglabs.com" class="footer-contact">therien@thiesinglabs.com</a>
+    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=therien@thiesinglabs.com" target="_blank" rel="noopener" class="footer-contact">therien@thiesinglabs.com</a>
   </footer>
 
 </body>
