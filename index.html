@@ -1,175 +1,488 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thiesing Labs</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Literata:opsz,wght@7..72,300;7..72,400;7..72,600&display=swap" rel="stylesheet">
-    <style>
-        :root { --primary-bg:#0a0e12; --secondary-bg:#111620; --tertiary-bg:#1a2332; --accent:#4a9eff; --accent-dim:#2d6ba8; --text-primary:#e8eef5; --text-secondary:#8b9db5; --text-tertiary:#5a6b7f; --border:#1e2938; --glow:rgba(74,158,255,0.15); }
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:Literata,Georgia,serif; background:var(--primary-bg); color:var(--text-primary); line-height:1.7; font-weight:300; overflow-x:hidden; }
-        .grid-background { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; opacity:0.03; background-image:linear-gradient(var(--accent) 1px,transparent 1px),linear-gradient(90deg,var(--accent) 1px,transparent 1px); background-size:60px 60px; animation:gridMove 20s linear infinite; }
-        @keyframes gridMove { 0%{transform:translate(0,0)} 100%{transform:translate(60px,60px)} }
-        .container { max-width:900px; margin:0 auto; padding:0 24px; position:relative; z-index:1; }
-        header { padding:80px 0 120px; }
-        .logo { font-family:JetBrains Mono,monospace; font-size:14px; color:var(--accent); letter-spacing:0.5px; margin-bottom:60px; opacity:0; animation:fadeInUp 0.8s ease forwards; }
-        h1 { font-size:clamp(32px,5vw,52px); font-weight:300; line-height:1.2; margin-bottom:24px; opacity:0; animation:fadeInUp 0.8s ease 0.2s forwards; }
-        .hero-subtitle { font-size:18px; color:var(--text-secondary); max-width:700px; font-weight:300; opacity:0; animation:fadeInUp 0.8s ease 0.4s forwards; }
-        section { margin-bottom:120px; opacity:0; animation:fadeInUp 0.8s ease forwards; }
-        section:nth-child(2){animation-delay:.5s} section:nth-child(3){animation-delay:.6s} section:nth-child(4){animation-delay:.7s} section:nth-child(5){animation-delay:.8s} section:nth-child(6){animation-delay:.9s} section:nth-child(7){animation-delay:1s} section:nth-child(8){animation-delay:1.1s}
-        h2 { font-family:JetBrains Mono,monospace; font-size:12px; font-weight:500; text-transform:uppercase; letter-spacing:1.5px; color:var(--accent); margin-bottom:32px; position:relative; padding-left:24px; }
-        h2::before { content:""; position:absolute; left:0; top:50%; transform:translateY(-50%); width:12px; height:1px; background:var(--accent); }
-        h3 { font-size:24px; font-weight:400; color:var(--text-primary); margin-bottom:16px; margin-top:48px; }
-        h3:first-of-type { margin-top:0; }
-        p { color:var(--text-secondary); margin-bottom:20px; font-size:16px; }
-        .tech-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:24px; margin-top:32px; }
-        .tech-item { background:var(--secondary-bg); border:1px solid var(--border); padding:24px; transition:all 0.3s ease; }
-        .tech-item h4 { font-family:JetBrains Mono,monospace; font-size:13px; color:var(--accent); margin-bottom:12px; font-weight:500; }
-        .tech-item p { font-size:14px; margin-bottom:0; }
-        .tech-item:hover { border-color:var(--accent-dim); box-shadow:0 0 30px var(--glow); }
-        .ventures-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:40px; }
-        .venture-card { background:var(--secondary-bg); border:1px solid var(--border); aspect-ratio:3/4; position:relative; overflow:hidden; transition:border-color 0.4s ease,box-shadow 0.4s ease; }
-        .venture-card:hover { border-color:var(--accent-dim); box-shadow:0 0 60px var(--glow); }
-        .venture-front { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:32px 24px; gap:28px; transition:opacity 0.4s ease,transform 0.4s ease; }
-        .venture-card:hover .venture-front { opacity:0; transform:translateY(-14px); pointer-events:none; }
-        .venture-icon { width:68px; height:68px; flex-shrink:0; }
-        .venture-statement { font-family:Literata,Georgia,serif; font-size:14px; font-weight:300; color:var(--text-secondary); text-align:center; line-height:1.65; font-style:italic; }
-        .venture-back { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; padding:36px 28px 36px 36px; opacity:0; transform:translateY(14px); transition:opacity 0.4s ease,transform 0.4s ease; pointer-events:none; }
-        .venture-card:hover .venture-back { opacity:1; transform:translateY(0); pointer-events:auto; }
-        .venture-back::before { content:""; position:absolute; top:0; left:0; width:3px; height:100%; background:var(--accent); transform:scaleY(0); transform-origin:top; transition:transform 0.4s ease 0.1s; }
-        .venture-card:hover .venture-back::before { transform:scaleY(1); }
-        .venture-name { font-family:JetBrains Mono,monospace; font-size:12px; font-weight:500; color:var(--accent); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:16px; }
-        .venture-desc { font-size:14px; font-weight:300; color:var(--text-secondary); line-height:1.75; margin-bottom:32px; }
-        .venture-cta { font-family:JetBrains Mono,monospace; font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:var(--accent); text-decoration:none; display:flex; align-items:center; gap:8px; opacity:0.8; transition:gap 0.2s ease,opacity 0.2s ease; }
-        .venture-cta:hover { gap:13px; opacity:1; }
-        .venture-cta::after { content:"→"; }
-        footer { border-top:1px solid var(--border); padding:60px 0; margin-top:80px; text-align:center; }
-        footer p { font-family:JetBrains Mono,monospace; font-size:12px; color:var(--text-tertiary); margin:0; }
-        @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
-        @media(max-width:768px) { header{padding:60px 0 80px} section{margin-bottom:80px} h1{font-size:36px} .hero-subtitle{font-size:16px} .tech-grid{grid-template-columns:1fr} .ventures-grid{grid-template-columns:1fr} .venture-card{aspect-ratio:unset;min-height:280px} }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thiesing Labs</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #1e1e1e;
+      --border-hover: #2e2e2e;
+      --text-primary: #f0f0f0;
+      --text-secondary: #888;
+      --text-tertiary: #555;
+      --accent: #e8e8e8;
+      --tag-bg: #1a1a1a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 60px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-logo {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--text-primary); }
+
+    .nav-cta {
+      font-size: 13px;
+      color: var(--text-primary);
+      text-decoration: none;
+      border: 1px solid var(--border-hover);
+      padding: 6px 16px;
+      border-radius: 6px;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .nav-cta:hover {
+      border-color: #444;
+      background: var(--surface);
+    }
+
+    /* MAIN LAYOUT */
+    main { padding-top: 60px; }
+
+    section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 100px 40px;
+    }
+
+    section + section {
+      border-top: 1px solid var(--border);
+    }
+
+    /* HERO */
+    .hero {
+      padding-top: 140px;
+      padding-bottom: 120px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 54px);
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 28px;
+      max-width: 680px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--text-secondary);
+    }
+
+    .hero-sub {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--text-primary);
+      color: var(--bg);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 7px;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+
+    .btn-primary:hover { opacity: 0.85; }
+
+    .btn-ghost {
+      display: inline-block;
+      color: var(--text-secondary);
+      font-size: 13px;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .btn-ghost:hover { color: var(--text-primary); }
+
+    /* SECTION HEADERS */
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 48px;
+    }
+
+    /* VENTURES */
+    .ventures-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .venture-card {
+      background: var(--surface);
+      padding: 36px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: background 0.15s;
+      cursor: default;
+    }
+
+    .venture-card:hover { background: #161616; }
+
+    .venture-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      background: var(--tag-bg);
+      padding: 4px 10px;
+      border-radius: 4px;
+      width: fit-content;
+      border: 1px solid var(--border);
+    }
+
+    .venture-tag .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .venture-tag.active .dot { background: #4ade80; color: #4ade80; }
+    .venture-tag.active { color: #4ade80; }
+    .venture-tag.building .dot { background: #facc15; color: #facc15; }
+    .venture-tag.building { color: #facc15; }
+
+    .venture-name {
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    .venture-insight {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    .venture-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .venture-link {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
+    }
+
+    .venture-link:hover { color: var(--text-primary); }
+
+    /* PRINCIPLES */
+    .principles-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .principle {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 32px;
+      padding: 32px 36px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .principle:last-child { border-bottom: none; }
+
+    .principle-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      padding-top: 2px;
+    }
+
+    .principle-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* ABOUT */
+    .about-text {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      max-width: 640px;
+    }
+
+    .about-text + .about-text {
+      margin-top: 20px;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 40px;
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-left {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .footer-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+
+    .footer-contact {
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-contact:hover { color: var(--text-primary); }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; }
+      section { padding: 80px 20px; }
+      .ventures-grid { grid-template-columns: 1fr; }
+      .principle { grid-template-columns: 1fr; gap: 8px; }
+      footer { flex-direction: column; gap: 20px; align-items: flex-start; padding: 40px 20px; }
+      .hero { padding-top: 100px; padding-bottom: 80px; }
+    }
+  </style>
 </head>
 <body>
-<div class="grid-background"></div>
-<div class="container">
-    <header>
-        <div class="logo">THIESING LABS</div>
-        <h1>A venture studio building across technology, systems, and product design</h1>
-        <p class="hero-subtitle">We support multiple branches of work, from software and interaction design to strategic infrastructure. What you see here reflects one part of a broader structure.</p>
-    </header>
-    <section>
-        <h2>Company Overview</h2>
-        <p>Thiesing Labs is an independent venture studio and parent company. We develop and support projects across several verticals, with distinct capabilities in technology, product strategy, and systems design.</p>
-        <p>This site presents our technology branch, specifically our work on multi-surface software and interaction design. Other areas of focus are not represented here.</p>
+
+  <nav>
+    <a href="/" class="nav-logo">Thiesing Labs</a>
+    <ul class="nav-links">
+      <li><a href="#ventures">Ventures</a></li>
+      <li><a href="#principles">Principles</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <a href="mailto:therien@thiesinglabs.com" class="nav-cta">Get in touch</a>
+  </nav>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <p class="hero-eyebrow">Thiesing Labs</p>
+      <h1>Building where technology <em>shifts the rules</em> of how industries work.</h1>
+      <p class="hero-sub">
+        We're an independent venture studio. We find problems worth solving at inflection points — when new technology makes the old way of doing something suddenly, obviously wrong — and build from there.
+      </p>
+      <div class="hero-actions">
+        <a href="#ventures" class="btn-primary">See our work</a>
+        <a href="mailto:therien@thiesinglabs.com" class="btn-ghost">Get in touch →</a>
+      </div>
     </section>
-    <section>
-        <h2>What We're Exploring</h2>
-        <h3>Technology Branch</h3>
-        <p>Our software and systems work focuses on products that function across multiple interaction surfaces. We're interested in how tools can remain coherent as people move between environments, devices, and modes of attention.</p>
-        <h3>Adaptive Productivity Tools</h3>
-        <p>Tools designed to balance structure and flexibility, adapting to how people plan and execute work in real life.</p>
-        <h3>Input and Capture Design</h3>
-        <p>Reducing the distance between intent and documentation. We study how different input modalities can complement rather than replace each other.</p>
-        <h3>Cross-Surface Continuity</h3>
-        <p>Building intelligence that moves with you. The difficult problems are not technical; they are about understanding when to interrupt, when to defer, and when to stay silent.</p>
-    </section>
-    <section>
-        <h2>Products &amp; Projects</h2>
-        <h3>Technology Portfolio</h3>
-        <p>We are currently in a prototyping and validation phase on several software concepts. Initial work focuses on time management and structured capture.</p>
-        <p style="margin-top:24px">This represents a subset of our overall portfolio. Detailed concepts and prototypes are shared selectively with partners and collaborators.</p>
-    </section>
-    <section>
-        <h2>Wearables as Interaction Layer</h2>
-        <h3>Design Perspective</h3>
-        <p>We view wearable devices as complementary interaction surfaces rather than standalone platforms.</p>
-        <p style="margin-top:24px">Their value lies in moments where traditional interfaces introduce friction: quick capture, brief confirmation, or lightweight awareness, while more complex interaction remains anchored elsewhere.</p>
-        <p style="margin-top:24px">Our focus is on designing experiences that respect attention, context, and human limits.</p>
-    </section>
-    <section>
-        <h2>Current Status</h2>
-        <h3>Technology Branch</h3>
-        <p>We are actively prototyping and testing interaction patterns across mobile and wearable form factors. Our current focus is on validating core assumptions before expanding product scope.</p>
-        <p>This phase is intentionally deliberate. We are optimizing for conceptual clarity and long-term system coherence rather than feature velocity.</p>
-    </section>
-    <section>
-        <h2>System Principles</h2>
-        <h3>How We Approach Technology</h3>
-        <div class="tech-grid">
-            <div class="tech-item"><h4>Systems Over Features</h4><p>We design for workflows that span devices, not isolated feature sets. Every interaction is considered as part of a larger behavioral pattern.</p></div>
-            <div class="tech-item"><h4>Constraint-Driven Design</h4><p>Different surfaces impose different constraints. We treat these as design guidance rather than technical limitations.</p></div>
-            <div class="tech-item"><h4>Intentional Restraint</h4><p>Not every surface needs every capability. We build for the moments when a specific interaction model creates meaningful value.</p></div>
+
+    <!-- VENTURES -->
+    <section id="ventures">
+      <p class="section-label">Ventures</p>
+      <div class="ventures-grid">
+
+        <div class="venture-card">
+          <span class="venture-tag active"><span class="dot"></span>Active</span>
+          <div class="venture-name">Compatible AI</div>
+          <div class="venture-insight">"AI is already searching. Most businesses don't exist in that conversation."</div>
+          <div class="venture-desc">
+            An agentic commerce platform that connects independent service businesses to emerging AI booking protocols — MCP, ACP, and UCP — so they're discoverable and transactable inside ChatGPT, Claude, and Google AI Mode. No code required on the business side.
+          </div>
         </div>
-    </section>
-    <section>
-        <h2>Ventures</h2>
-        <p>A selection of ideas and products in active development. Hover to learn more.</p>
-        <div class="ventures-grid">
-            <div class="venture-card">
-                <div class="venture-front">
-                    <svg class="venture-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="8" y="10" width="34" height="56" rx="4" stroke="#4a9eff" stroke-width="2.5"/>
-                        <rect x="14" y="16" width="14" height="11" rx="2" stroke="#4a9eff" stroke-width="2"/>
-                        <path d="M25 36 C25 36 17 46 17 51 C17 55.4 20.6 59 25 59 C29.4 59 33 55.4 33 51 C33 46 25 36 25 36Z" stroke="#4a9eff" stroke-width="2.5"/>
-                        <path d="M42 22 L54 22 L54 42 Q54 52 62 52" stroke="#4a9eff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M59 48 L66 52 L62 60 L55 56Z" stroke="#4a9eff" stroke-width="2"/>
-                    </svg>
-                    <p class="venture-statement">Why waste time getting fuel, when you can have it delivered straight to your boat.</p>
-                </div>
-                <div class="venture-back">
-                    <div class="venture-name">WaterFuel</div>
-                    <p class="venture-desc">Mobile fuel delivery that comes to you. On-demand, location-aware, and built for people whose time is worth more than the trip.</p>
-                    <span class="venture-cta">Contact us to learn more</span>
-                </div>
-            </div>
-            <div class="venture-card">
-                <div class="venture-front">
-                    <svg class="venture-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 6 L34 6 L34 16 A5 5 0 0 1 34 26 L34 34 L24 34 A5 5 0 0 1 14 34 L6 34 Z" stroke="#4a9eff" stroke-width="2.5" stroke-linejoin="round"/>
-                        <path d="M46 6 L74 6 L74 34 L64 34 A5 5 0 0 1 54 34 L46 34 L46 26 A5 5 0 0 0 46 16 L46 6 Z" stroke="#4a9eff" stroke-width="2.5" stroke-linejoin="round"/>
-                        <path d="M6 46 L14 46 A5 5 0 0 0 24 46 L34 46 L34 54 A5 5 0 0 1 34 64 L34 74 L6 74 Z" stroke="#4a9eff" stroke-width="2.5" stroke-linejoin="round"/>
-                        <path d="M46 46 L54 46 A5 5 0 0 1 64 46 L74 46 L74 74 L46 74 L46 64 A5 5 0 0 0 46 54 L46 46 Z" stroke="#4a9eff" stroke-width="2.5" stroke-linejoin="round"/>
-                    </svg>
-                    <p class="venture-statement">AI is already shopping. Is your business on the shelf?</p>
-                </div>
-                <div class="venture-back">
-                    <div class="venture-name">Compatible</div>
-                    <p class="venture-desc">An agentic commerce platform that makes your products and services visible to AI systems. When AI handles the search, your business needs to be where it's looking.</p>
-                    <span class="venture-cta">Contact us to learn more</span>
-                </div>
-            </div>
-            <div class="venture-card">
-                <div class="venture-front">
-                    <svg class="venture-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M40 64 C30 60 14 60 6 62 L6 30 C14 28 30 28 40 32Z" stroke="#4a9eff" stroke-width="2.5" stroke-linejoin="round"/>
-                        <path d="M40 64 C50 60 66 60 74 62 L74 30 C66 28 50 28 40 32Z" stroke="#4a9eff" stroke-width="2.5" stroke-linejoin="round"/>
-                        <path d="M40 32 Q38 48 40 64" stroke="#4a9eff" stroke-width="1.8" stroke-linecap="round"/>
-                        <line x1="12" y1="37" x2="36" y2="36" stroke="#4a9eff" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-                        <line x1="12" y1="43" x2="36" y2="42" stroke="#4a9eff" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-                        <line x1="12" y1="49" x2="36" y2="48" stroke="#4a9eff" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-                        <line x1="44" y1="36" x2="68" y2="37" stroke="#4a9eff" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-                        <line x1="44" y1="42" x2="68" y2="43" stroke="#4a9eff" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-                        <line x1="44" y1="48" x2="68" y2="49" stroke="#4a9eff" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-                        <path d="M16 20 L17.2 16 L18.4 20 L22 21 L18.4 22 L17.2 26 L16 22 L12 21Z" fill="#4a9eff" opacity="0.85"/>
-                        <path d="M56 8 L58 2 L60 8 L66 10 L60 12 L58 18 L56 12 L50 10Z" fill="#4a9eff" opacity="0.9"/>
-                        <path d="M67 17 L68 14 L69 17 L72 18 L69 19 L68 22 L67 19 L64 18Z" fill="#4a9eff" opacity="0.7"/>
-                    </svg>
-                    <p class="venture-statement">Music artists get paid for their work, authors should too.</p>
-                </div>
-                <div class="venture-back">
-                    <div class="venture-name">Pose</div>
-                    <p class="venture-desc">A licensing infrastructure for book knowledge in the age of AI. Authors set terms, AI applications pay to access, with citation limits enforced and creators compensated fairly.</p>
-                    <span class="venture-cta">Contact us to learn more</span>
-                </div>
-            </div>
+
+        <div class="venture-card">
+          <span class="venture-tag building"><span class="dot"></span>Building</span>
+          <div class="venture-name">Pose</div>
+          <div class="venture-insight">"Music artists get paid when their work is used. Authors should too."</div>
+          <div class="venture-desc">
+            Licensing infrastructure for book knowledge in the age of AI. Authors set terms, AI applications pay to access, citation limits are enforced, and creators are compensated — automatically.
+          </div>
         </div>
+
+        <div class="venture-card">
+          <span class="venture-tag building"><span class="dot"></span>Building</span>
+          <div class="venture-name">WaterFuel</div>
+          <div class="venture-insight">"Why waste time getting fuel when it can come to you."</div>
+          <div class="venture-desc">
+            Mobile fuel delivery for boats and watercraft. On-demand, location-aware, built for people whose time on the water is worth more than the trip to the dock.
+          </div>
+        </div>
+
+        <div class="venture-card">
+          <span class="venture-tag"><span class="dot"></span>Exploring</span>
+          <div class="venture-name">Music Flow</div>
+          <div class="venture-insight">"The business side of music is where artists lose the most."</div>
+          <div class="venture-desc">
+            Tools for independent musicians to manage the operational layer of their career — rights, releases, revenue tracking — without needing a label or a manager.
+          </div>
+        </div>
+
+      </div>
     </section>
-    <footer>
-        <p>&copy; 2025 Thiesing Labs. For partnership, development, or technical inquiries: thiesinglabs@gmail.com</p>
-    </footer>
-</div>
+
+    <!-- PRINCIPLES -->
+    <section id="principles">
+      <p class="section-label">How We Work</p>
+      <div class="principles-list">
+
+        <div class="principle">
+          <div class="principle-name">Start with the shift</div>
+          <div class="principle-desc">
+            We look for moments when new technology makes an old way of doing something obviously wrong. That gap — between what's possible and what most people are still doing — is where we build.
+          </div>
+        </div>
+
+        <div class="principle">
+          <div class="principle-name">Validate before building</div>
+          <div class="principle-desc">
+            We don't treat a working prototype as proof of anything. Real evidence comes from people, not code. We spend time in the problem before we commit to a solution.
+          </div>
+        </div>
+
+        <div class="principle">
+          <div class="principle-name">Stay lean on purpose</div>
+          <div class="principle-desc">
+            AI infrastructure has changed what a small team can build. We use that advantage deliberately — staying small keeps us fast, close to users, and free from the organizational weight that slows most companies down.
+          </div>
+        </div>
+
+        <div class="principle">
+          <div class="principle-name">One problem at a time</div>
+          <div class="principle-desc">
+            Each venture has a single, specific problem it's trying to solve. When we can't say the problem in one sentence, we're not ready to build.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <p class="section-label">About</p>
+      <p class="about-text">
+        Thiesing Labs is an independent venture studio founded by Therien Thiesing. We build across technology, systems, and product design — finding problems at inflection points where new infrastructure makes entirely new products possible.
+      </p>
+      <p class="about-text">
+        We're currently focused on the agentic commerce layer — the infrastructure that lets AI assistants discover, evaluate, and transact with businesses on behalf of users. Our flagship venture, Compatible AI, is our first product in this space.
+      </p>
+      <p class="about-text" style="margin-top: 20px; font-size: 14px; color: var(--text-tertiary);">
+        For partnership, investment, or collaboration inquiries: <a href="mailto:therien@thiesinglabs.com" style="color: var(--text-secondary); text-decoration: none;">therien@thiesinglabs.com</a>
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-left">
+      <span class="footer-name">Thiesing Labs</span>
+      <span class="footer-copy">© 2026 · Independent Venture Studio</span>
+    </div>
+    <a href="mailto:therien@thiesinglabs.com" class="footer-contact">therien@thiesinglabs.com</a>
+  </footer>
+
 </body>
 </html>
